@@ -41,7 +41,10 @@ async function run() {
         await client.connect();
         const database = client.db('travelAgent');
         const serviceCollection = database.collection('services')
+
+        const bookingCollection = database.collection('bookings')
         // console.log('connected to database ya la la hoo ..!!');
+
 
         //get API
         app.get('/services', async (req, res) => {
@@ -72,7 +75,12 @@ async function run() {
             res.json(result)
         })
 
-
+        //booking get API
+        app.get('/bookings', async (req, res) => {
+            const cursor = bookingCollection.find({});
+            const booking = await cursor.toArray();
+            res.send(booking);
+        })
 
 
 
