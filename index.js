@@ -58,7 +58,7 @@ async function run() {
         //get single services
         app.get('/services/:id', async (req, res) => {
             const id = req.params.id;
-            // console.log('getting specific id');
+            console.log('getting specific id');
             const query = { _id: ObjectId(id) };
             const service = await serviceCollection.findOne(query);
             res.json(service);
@@ -76,10 +76,14 @@ async function run() {
         })
 
         //booking get API
-        app.get('/bookings', async (req, res) => {
-            const cursor = bookingCollection.find({});
-            const booking = await cursor.toArray();
-            res.send(booking);
+        app.post ('/bookings', async (req, res) => {
+            // const cursor = bookingCollection.find({});
+            // console.log('i can get ', cursor);
+            // const booking = await cursor.toArray();
+            const order = req.body;
+            const result = await bookingCollection.insertOne(order);
+            console.log('order', order);
+            res.json(result);
         })
 
 
